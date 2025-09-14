@@ -16,4 +16,28 @@
   "type" : "ROAD",
   "price" : 35.0,
   "active" : true
+}, {
+  "id" : 4,
+  "title" : "Orbea Onna",
+  "type" : "MOUNTAIN",
+  "price" : 130.0,
+  "active" : true
+}, {
+  "id" : 5,
+  "title" : "Orbea Onna",
+  "type" : "MOUNTAIN",
+  "price" : 30.0,
+  "active" : true
+}, {
+  "id" : 6,
+  "title" : "Orbea Onna",
+  "type" : "MOUNTAIN",
+  "price" : 30.0,
+  "active" : true
+}, {
+  "id" : 7,
+  "title" : "Orbea Onna",
+  "type" : "MOUNTAIN",
+  "price" : 30.0,
+  "active" : true
 } ]
