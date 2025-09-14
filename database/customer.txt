@@ -1,0 +1,16 @@
+[ {
+  "id" : 1,
+  "name" : "Николай",
+  "active" : true,
+  "bikes" : [ ]
+}, {
+  "id" : 2,
+  "name" : "Андрей",
+  "active" : true,
+  "bikes" : [ ]
+}, {
+  "id" : 3,
+  "name" : "Сергей",
+  "active" : true,
+  "bikes" : [ ]
+} ]
