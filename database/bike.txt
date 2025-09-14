@@ -1,19 +1,19 @@
 [ {
   "id" : 1,
   "title" : "Cannondale Trail SE",
-  "type" : "Mountain Bikes",
+  "type" : "MOUNTAIN",
   "price" : 45.0,
   "active" : true
 }, {
   "id" : 2,
   "title" : "Buls Copperhead",
-  "type" : "Mountain Bikes",
+  "type" : "GRAVEL",
   "price" : 55.0,
   "active" : true
 }, {
   "id" : 3,
   "title" : "Cube Nuroad One",
-  "type" : "Gravel",
+  "type" : "ROAD",
   "price" : 35.0,
   "active" : true
 } ]

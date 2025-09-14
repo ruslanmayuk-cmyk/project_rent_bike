@@ -5,20 +5,20 @@ import java.util.Objects;
 public class Bike {
     private  int id;
     private String title;
-    private String type;
+    private BikeType type;
     private double price;
     private boolean active;
 
     public Bike() {
     }
 
-    public Bike(String title, String type, double price) {
+    public Bike(String title, BikeType type, double price) {
         this.title = title;
         this.type = type;
         this.price = price;
     }
 
-    public Bike(int id, String title, String type, double price, boolean active) {
+    public Bike(int id, String title, BikeType type, double price, boolean active) {
         this.id = id;
         this.title = title;
         this.type = type;
@@ -42,11 +42,11 @@ public class Bike {
         this.title = title;
     }
 
-    public String getType() {
+    public BikeType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(BikeType type) {
         this.type = type;
     }
 
@@ -70,7 +70,7 @@ public class Bike {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Bike bike = (Bike) o;
-        return id == bike.id && Double.compare(price, bike.price) == 0 && active == bike.active && Objects.equals(title, bike.title) && Objects.equals(type, bike.type);
+        return id == bike.id && Double.compare(price, bike.price) == 0 && active == bike.active && Objects.equals(title, bike.title) && type == bike.type;
     }
 
     @Override
@@ -81,6 +81,6 @@ public class Bike {
     @Override
     public String toString() {
         return String.format("Велосипед: id - %d, наименование - %s, тип - %s, цена - %.2f, активен - %b.",
-                id, title, type, price, active);
+                id, title, type.getRussianName(), price, active);
     }
 }
