@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BikeRepositoty {
+public class BikeRepository {
 
     private final File database;    // Файл, который является базой данных
     private final ObjectMapper mapper;  // Маппер для чтения и записи объектов в файл
@@ -20,7 +20,7 @@ public class BikeRepositoty {
 
     // Конструктор
     // В этом конструкторе мы инициализируем все поля репозитория
-    public BikeRepositoty() throws IOException {
+    public BikeRepository() throws IOException {
         database = new File("database/bike.txt");
         mapper = new ObjectMapper();
 

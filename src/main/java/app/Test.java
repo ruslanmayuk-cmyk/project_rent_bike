@@ -1,16 +1,9 @@
 package app;
 
-import app.domain.Bike;
-import app.domain.BikeType;
 import app.domain.Customer;
-import app.repository.BikeRepositoty;
 import app.repository.CustomerRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class Test {
 //    public static void main(String[] args) throws IOException {
