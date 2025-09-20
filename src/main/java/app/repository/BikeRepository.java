@@ -70,12 +70,16 @@ public class BikeRepository {
         int id = bike.getId(); // сохраняем в переменную id обьекта
         double newPrice = bike.getPrice(); // сохраняем новую цену,
                                           // эта цена передается в метод update вместе с обьектом.
-
+        boolean active = bike.isActive();
         List<Bike> bikes = findAll(); // получаем спискок всех байков, к-рые сейчас хранятся в БД
         bikes
                 .stream()  // запускаем стрим
                 .filter(x -> x.getId() == id) // фильтруем все байки, к-рые есть, по id = спискок из нашего байка
-                .forEach(x -> x.setPrice(newPrice));
+                .forEach(x -> {
+                                    x.setPrice(newPrice);
+                                    x.setActive(active);
+                                   }
+                         );
            // с помощью forEach меняем у обьекта, к-рый остался в стриме цену. Все остальные продукты не
           // задействуюся, т.к. после filter в стриме остался только один продукт
 

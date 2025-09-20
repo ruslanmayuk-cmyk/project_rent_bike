@@ -13,4 +13,9 @@
   "name" : "Сергей",
   "active" : true,
   "bikes" : [ ]
+}, {
+  "id" : 4,
+  "name" : "Середжиус",
+  "active" : false,
+  "bikes" : [ ]
 } ]

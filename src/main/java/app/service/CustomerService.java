@@ -65,22 +65,29 @@ public class CustomerService {
         if (name == null || name.trim().isEmpty()) {
             throw new CustomerUpdateException("Имя покупателя не может быть пустым");
         }
-
+        customer.setActive(true);
         repository.update(customer);
     }
 
     //    Удалить покупателя из базы данных по его идентификатору.
     public void deleteById(int id) throws IOException, CustomerNotFoundException {
-        getActiveCustomerById(id).setActive(false);
+        Customer customer = getActiveCustomerById(id);
+        customer.setActive(false);
+        repository.update(customer);
     }
 
     //    Удалить покупателя из базы данных по его имени.
-    public void deleteByName(String name) throws IOException {
-        getAllActiveCustomers() // получаем всех активных пользователей
+    public void deleteByName(String name) throws IOException, CustomerNotFoundException {
+        Customer customer = getAllActiveCustomers() // получаем всех активных пользователей
                 .stream()
                 .filter(x -> x.getName().equals(name)) // находим пользователя, к-рый соответствует имени
-                .forEach(x -> x.setActive(false)); // forEach переназначит статус пользователю,
-                // к-рый остался в стриме на false
+                .peek(x -> x.setActive(false))
+                .findFirst()
+                .orElseThrow(
+                        () -> new CustomerNotFoundException(name)
+                );
+        repository.update(customer);
+
     }
 
     //    Восстановить удалённого покупателя в базе данных по его идентификатору.
@@ -92,6 +99,7 @@ public class CustomerService {
 
         if (customer != null) {
             customer.setActive(true);
+           repository.update(customer);
         } else {  //  может быть, что покупатель не найден  - тогда обрабатываем ошибку
             throw new CustomerNotFoundException(id);
         }
@@ -129,6 +137,7 @@ public class CustomerService {
         Customer customer = getActiveCustomerById(customerId); // забираем покупателя в переменную
         Bike bike = bikeService.getActiveBikeById(bikeId); // получаем в переменную байк
         customer.getBikes().add(bike); // получаем от пользователя список байков и делаем в него add
+        repository.update(customer); // сохраняем изменения
     }
 
     //    Удалить байк из корзины покупателя по идентификатору
@@ -136,10 +145,13 @@ public class CustomerService {
         Customer customer = getActiveCustomerById(customerId);
         Bike bike = bikeService.getActiveBikeById(bikeId);
         customer.getBikes().remove(bike);
+        repository.update(customer); // сохраняем изменения
     }
 
     //    Полностью очистить корзину покупателя по его идентификатору (если он активен
     public void clearCustomerCart(int id) throws IOException, CustomerNotFoundException {
-        getActiveCustomerById(id).getBikes().clear();
+        Customer customer = getActiveCustomerById(id);
+                customer.getBikes().clear();
+        repository.update(customer);
     }
 }

@@ -3,41 +3,48 @@
   "title" : "Cannondale Trail SE",
   "type" : "MOUNTAIN",
   "price" : 45.0,
-  "active" : true
+  "active" : true,
+  "rentDays" : 0
 }, {
   "id" : 2,
   "title" : "Buls Copperhead",
   "type" : "GRAVEL",
   "price" : 55.0,
-  "active" : true
+  "active" : true,
+  "rentDays" : 0
 }, {
   "id" : 3,
   "title" : "Cube Nuroad One",
   "type" : "ROAD",
   "price" : 35.0,
-  "active" : true
+  "active" : true,
+  "rentDays" : 0
 }, {
   "id" : 4,
   "title" : "Orbea Onna",
   "type" : "MOUNTAIN",
   "price" : 130.0,
-  "active" : true
+  "active" : true,
+  "rentDays" : 0
 }, {
   "id" : 5,
   "title" : "Orbea Onna",
   "type" : "MOUNTAIN",
   "price" : 30.0,
-  "active" : true
+  "active" : true,
+  "rentDays" : 0
 }, {
   "id" : 6,
   "title" : "Orbea Onna",
   "type" : "MOUNTAIN",
   "price" : 30.0,
-  "active" : true
+  "active" : true,
+  "rentDays" : 0
 }, {
   "id" : 7,
   "title" : "Orbea Onna",
   "type" : "MOUNTAIN",
   "price" : 30.0,
-  "active" : true
+  "active" : true,
+  "rentDays" : 0
 } ]

@@ -67,51 +67,51 @@ public class Client {
 
                 switch (input) {
                     case "1":
-                        System.out.println("Введите название продукта");
+                        System.out.println("Введите название байка");
                         String title = scanner.nextLine();
-                        System.out.println("Введите цену продукта");
+                        System.out.println("Введите цену цену байка");
                         double price = Double.parseDouble(scanner.nextLine());
                         System.out.println(bikeController.save(title, price));
                         break;
                     case "2":
-                        bikeController.getAllActiveProducts().forEach(System.out::println);
+                        bikeController.getAllActiveBikes().forEach(System.out::println);
                         break;
                     case "3":
-                        System.out.println("Введите идентификатор продукта");
+                        System.out.println("Введите идентификатор байка");
                         int id = Integer.parseInt(scanner.nextLine());
-                        System.out.println(bikeController.getActiveProductById(id));
+                        System.out.println(bikeController.getActiveBikeById(id));
                         break;
                     case "4":
-                        System.out.println("Введите идентификатор продукта");
+                        System.out.println("Введите идентификатор байка");
                         id = Integer.parseInt(scanner.nextLine());
-                        System.out.println("Введите новую цену продукта");
+                        System.out.println("Введите новую цену байка");
                         price = Double.parseDouble(scanner.nextLine());
                         bikeController.update(id, price);
                         break;
                     case "5":
-                        System.out.println("Введите идентификатор продукта");
+                        System.out.println("Введите идентификатор байка");
                         id = Integer.parseInt(scanner.nextLine());
                         bikeController.deleteById(id);
                         break;
                     case "6":
-                        System.out.println("Введите название продукта");
+                        System.out.println("Введите название байка");
                         title = scanner.nextLine();
                         bikeController.deleteByTitle(title);
                         break;
                     case "7":
-                        System.out.println("Введите идентификатор продукта");
+                        System.out.println("Введите идентификатор байка");
                         id = Integer.parseInt(scanner.nextLine());
                         bikeController.restoreById(id);
                         break;
                     case "8":
-                        System.out.println("Количество продуктов: " + bikeController.getActiveBikesCount());
+                        System.out.println("Количество байков: " + bikeController.getActiveBikesCount());
                         break;
                     case "9":
-                        System.out.println("Суммарная стоимость продуктов: " +
+                        System.out.println("Суммарная стоимость байков: " +
                                 bikeController.getActiveBikesTotalCost());
                         break;
                     case "10":
-                        System.out.println("Средняя стоимость продуктов: " +
+                        System.out.println("Средняя стоимость байков: " +
                                 bikeController.getActiveBikesAveragePrice());
                         break;
                     case "0":
@@ -140,9 +140,9 @@ public class Client {
                 System.out.println("7 - восстановить покупателя по идентификатору");
                 System.out.println("8 - получить количество покупателей");
                 System.out.println("9 - получить стоимость корзины покупателя");
-                System.out.println("10 - получить среднюю стоимость продукта в корзине покупателя");
-                System.out.println("11 - добавить товар в корзину покупателя");
-                System.out.println("12 - удалить товар из корзины покупателя");
+                System.out.println("10 - получить среднюю стоимость байка в корзине покупателя");
+                System.out.println("11 - добавить байк в корзину покупателя");
+                System.out.println("12 - удалить байк из корзины покупателя");
                 System.out.println("13 - очистить корзину покупателя");
                 System.out.println("0 - выход");
 
@@ -210,7 +210,7 @@ public class Client {
                     case "12":
                         System.out.println("Введите идентификатор покупателя");
                         customerId = Integer.parseInt(scanner.nextLine());
-                        System.out.println("Введите идентификатор продукта");
+                        System.out.println("Введите идентификатор байка");
                         productId = Integer.parseInt(scanner.nextLine());
                         customerController.removeProductFromCustomerCart(customerId, productId);
                         break;
