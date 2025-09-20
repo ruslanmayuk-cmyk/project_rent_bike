@@ -76,54 +76,59 @@ public class CustomerService {
 
     //    Удалить покупателя из базы данных по его имени.
     public void deleteByName(String name) throws IOException {
-        getAllActiveCustomers()
+        getAllActiveCustomers() // получаем всех активных пользователей
                 .stream()
-                .filter(x -> x.getName().equals(name))
-                .forEach(x -> x.setActive(false));
+                .filter(x -> x.getName().equals(name)) // находим пользователя, к-рый соответствует имени
+                .forEach(x -> x.setActive(false)); // forEach переназначит статус пользователю,
+                // к-рый остался в стриме на false
     }
 
     //    Восстановить удалённого покупателя в базе данных по его идентификатору.
     public void restoreById(int id) throws IOException, CustomerNotFoundException {
+        // типизируем переменную customer, в которую будем сохранть покупателя
+        // обращаемся к репозиторию, вызываем метод findById и передаем в него id
         Customer customer = repository.findById(id);
+
 
         if (customer != null) {
             customer.setActive(true);
-        } else {
+        } else {  //  может быть, что покупатель не найден  - тогда обрабатываем ошибку
             throw new CustomerNotFoundException(id);
         }
     }
 
     //    Вернуть общее количество покупателей в базе данных (активных).
     public int getActiveCustomerCount() throws IOException {
+        //  возвращаем сразу результат метода getAllActiveCustomers + size()
         return getAllActiveCustomers().size();
     }
 
     //    Вернуть стоимость корзины покупателя по его идентификатору (если он активен).
     public double getCustomerCartTotalPrice(int id) throws IOException, CustomerNotFoundException {
-        return getActiveCustomerById(id)
-                .getBikes()
+        return getActiveCustomerById(id)// получаем покупателя
+                .getBikes() // получаем его велики
                 .stream()
-                .filter(Bike::isActive)
-                .mapToDouble(Bike::getPrice)
-                .sum();
+                .filter(Bike::isActive) // нужны только активные
+                .mapToDouble(Bike::getPrice) // получаем их цену
+                .sum(); // суммируем
     }
 
     //    Вернуть среднюю стоимость продукта в корзине покупателя по его идентификатору (если он активен)
     public double getCustomerCartAveragePrice(int id) throws IOException, CustomerNotFoundException {
-        return getActiveCustomerById(id)
-                .getBikes()
+        return getActiveCustomerById(id)// получаем пользователя
+                .getBikes() // получаем байки
                 .stream()
-                .filter(Bike::isActive)
-                .mapToDouble(Bike::getPrice)
+                .filter(Bike::isActive) // фильтруем, что бы были только активные
+                .mapToDouble(Bike::getPrice) // получаем цены
                 .average()
-                .orElse(0.0);
+                .orElse(0.0); // если великов не было
     }
 
     //    Добавить байк в корзину покупателя по их идентификаторам (если оба активны)
     public void addBikeToCustomerCart(int customerId, int bikeId) throws IOException, CustomerNotFoundException, BikeNotFoundException {
-        Customer customer = getActiveCustomerById(customerId);
-        Bike bike = bikeService.getActiveBikeById(bikeId);
-        customer.getBikes().add(bike);
+        Customer customer = getActiveCustomerById(customerId); // забираем покупателя в переменную
+        Bike bike = bikeService.getActiveBikeById(bikeId); // получаем в переменную байк
+        customer.getBikes().add(bike); // получаем от пользователя список байков и делаем в него add
     }
 
     //    Удалить байк из корзины покупателя по идентификатору
