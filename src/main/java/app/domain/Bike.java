@@ -8,6 +8,7 @@ public class Bike {
     private BikeType type;
     private double price;
     private boolean active;
+    private int rentDays;  // на сколько дней берётся в аренду
 
     public Bike() {
     }
@@ -25,6 +26,13 @@ public class Bike {
         this.price = price;
         this.active = active;
     }
+
+    public Bike(int id, double price) {
+    }
+
+    public Bike(String title, double price) {
+    }
+
 
     public int getId() {
         return id;
@@ -64,6 +72,14 @@ public class Bike {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public int getRentDays() {
+        return rentDays;
+    }
+
+    public void setRentDays(int rentDays) {
+        this.rentDays = rentDays;
     }
 
     @Override

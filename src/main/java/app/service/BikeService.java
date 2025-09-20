@@ -12,8 +12,17 @@ import java.util.List;
 public class BikeService {
     private final BikeRepository repository;
 
-    public BikeService() throws IOException, IOException {
+    public BikeService() throws IOException {
         repository = new BikeRepository();
+    }
+    // Вернуть цену аренды  с учетом на сколько дней берётся в аренду
+    public double calculateRentCost(int id, int days) throws IOException, BikeNotFoundException {
+        Bike bike = getActiveBikeById(id);
+        if (days <= 0) {
+            throw new IllegalArgumentException("Количество дней аренды должно быть положительным");
+        }
+        bike.setRentDays(days); // сохраняем инфу в объекте
+        return bike.getPrice() * days;
     }
 
     //   Сохранить продукт в базе данных (при сохранении продукт автоматически считается активным).
@@ -71,6 +80,8 @@ public class BikeService {
 //   По требованиям должно происходить soft удаление - изменение статуса активности продукта
     public void deleteById(int id) throws IOException, BikeNotFoundException {
         getActiveBikeById(id).setActive(false);
+
+
     }
 
     //   Удалить продукт из базы данных по его наименованию.

@@ -7,13 +7,18 @@ public enum BikeType {
     CITY("городской"),
     ELECTRIC("электрический");
 
-    private String russianType;
+    private final String russianType;
 
     BikeType(String russianType) {
         this.russianType = russianType;
     }
 
-    public String getRussianName() {
+    public final String getRussianName() {
+        return russianType;
+    }
+
+    @Override
+    public String toString() {
         return russianType;
     }
 }
