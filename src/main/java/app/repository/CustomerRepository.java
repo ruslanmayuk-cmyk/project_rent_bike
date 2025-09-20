@@ -1,5 +1,6 @@
 package app.repository;
 
+import app.domain.Bike;
 import app.domain.Customer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -64,12 +65,19 @@ public class CustomerRepository {
     public void update(Customer customer) throws IOException {
         int id = customer.getId();
         String newName = customer.getName(); // Редактирование = замена имени
+        boolean active = customer.isActive();
+        List<Bike> bikes = customer.getBikes();
+
 
         List<Customer> customers = findAll();
         customers
                 .stream()
                 .filter(x -> x.getId() == id)
-                .forEach(x -> x.setName(newName));
+                .forEach(x -> {
+                    x.setName(newName);
+                    x.setActive(active);
+                    x.setBikes(bikes);
+                });
 
         mapper.writeValue(database, customers);
     }

@@ -72,24 +72,30 @@ public class BikeService {
         if (bike.getPrice() <= 0) {
             throw new BikeUpdateException("Цена байк должна быть положительной");
         }
-
+        bike.setActive(true);
         repository.update(bike);
     }
 
     //   Удалить продукт из базы данных по его идентификатору.
 //   По требованиям должно происходить soft удаление - изменение статуса активности продукта
     public void deleteById(int id) throws IOException, BikeNotFoundException {
-        getActiveBikeById(id).setActive(false);
-
-
+        Bike bike = getActiveBikeById(id);
+        bike.setActive(false);
+        repository.update(bike); // сохраняем изменения
     }
 
     //   Удалить продукт из базы данных по его наименованию.
-    public void deleteByTitle(String title) throws IOException {
-        getAllActiveBikes()
+    public void deleteByTitle(String title) throws IOException, BikeNotFoundException {
+       Bike bike = getAllActiveBikes()
                 .stream()
                 .filter(x -> x.getTitle().equals(title))
-                .forEach(x -> x.setActive(false));
+                .peek(x -> x.setActive(false))
+                .findFirst()
+                .orElseThrow(
+            ()-> new BikeNotFoundException(title)
+                );
+        repository.update(bike); // сохраняем изменения
+
     }
 
     //   Восстановить удалённый продукт в базе данных по его идентификатору.
@@ -98,6 +104,7 @@ public class BikeService {
 
         if (bike != null) {
             bike.setActive(true);
+            repository.update(bike); // сохраняем изменения
         } else {
             throw new BikeNotFoundException(id);
         }

@@ -24,11 +24,11 @@ public class BikeController {
         return service.save(bike);
     }
 
-    public List<Bike> getAllActiveProducts() throws IOException {
+    public List<Bike> getAllActiveBikes() throws IOException {
         return service.getAllActiveBikes(); // вызываем метод из сервиса
     }
 
-    public Bike getActiveProductById(int id) throws IOException, BikeNotFoundException {
+    public Bike getActiveBikeById(int id) throws IOException, BikeNotFoundException {
         return service.getActiveBikeById(id);
     }
 
