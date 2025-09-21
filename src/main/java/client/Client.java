@@ -2,6 +2,7 @@ package client;
 
 import app.controller.BikeController;
 import app.controller.CustomerController;
+import app.domain.Bike;
 import app.domain.BikeType;
 
 import java.util.Scanner;
@@ -71,7 +72,20 @@ public class Client {
                         String title = scanner.nextLine();
                         System.out.println("Введите цену цену байка");
                         double price = Double.parseDouble(scanner.nextLine());
-                        System.out.println(bikeController.save(title, price));
+
+                        System.out.println("Выберите тип байка:"); // выводим список всех типов байков
+                        // BikeType.values() возвращает массив всех элементов enum BikeType.
+                        for (BikeType type : BikeType.values()) {
+                            System.out.println((type.ordinal() + 1) + " - " + type.getRussianName());
+                            // type.ordinal() —  порядковый номер элемента в enum
+                        }
+                        // считываем выбор пользователя
+                        int typeChoice = Integer.parseInt(scanner.nextLine());
+                        // получаем соответствующий элемент enum
+                        BikeType bikeType = BikeType.values()[typeChoice - 1];
+                        // массив начинается с индекса 0, а пользователь вводил с 1
+                        Bike bike = new Bike(title, bikeType, price);
+                        System.out.println(bikeController.save(bike));
                         break;
                     case "2":
                         bikeController.getAllActiveBikes().forEach(System.out::println);
@@ -144,6 +158,7 @@ public class Client {
                 System.out.println("11 - добавить байк в корзину покупателя");
                 System.out.println("12 - удалить байк из корзины покупателя");
                 System.out.println("13 - очистить корзину покупателя");
+                System.out.println("14 - изменить количество дней аренды байка в корзине покупателя");
                 System.out.println("0 - выход");
 
                 String input = scanner.nextLine();
@@ -203,21 +218,36 @@ public class Client {
                     case "11":
                         System.out.println("Введите идентификатор покупателя");
                         int customerId = Integer.parseInt(scanner.nextLine());
-                        System.out.println("Введите идентификатор продукта");
-                        int productId = Integer.parseInt(scanner.nextLine());
-                        customerController.addProductToCustomerCart(customerId, productId);
+                        System.out.println("Введите идентификатор байка");
+                        int bikeId = Integer.parseInt(scanner.nextLine());
+                        System.out.println("Введите количество дней аренды");
+                        int rentDays = Integer.parseInt(scanner.nextLine());
+                        customerController.addProductToCustomerCart(customerId, bikeId, rentDays);
                         break;
                     case "12":
                         System.out.println("Введите идентификатор покупателя");
                         customerId = Integer.parseInt(scanner.nextLine());
                         System.out.println("Введите идентификатор байка");
-                        productId = Integer.parseInt(scanner.nextLine());
-                        customerController.removeProductFromCustomerCart(customerId, productId);
+                        bikeId = Integer.parseInt(scanner.nextLine());
+                        customerController.removeProductFromCustomerCart(customerId, bikeId);
                         break;
                     case "13":
                         System.out.println("Введите идентификатор");
                         id = Integer.parseInt(scanner.nextLine());
                         customerController.clearCustomerCart(id);
+                        break;
+                    case "14":
+                        System.out.println("Введите идентификатор покупателя");
+                        customerId = Integer.parseInt(scanner.nextLine());
+
+                        System.out.println("Введите идентификатор байка");
+                        bikeId = Integer.parseInt(scanner.nextLine());
+
+                        System.out.println("Введите новое количество дней аренды");
+                        rentDays = Integer.parseInt(scanner.nextLine());
+
+                        customerController.updateBikeRentDaysInCustomerCart(customerId, bikeId, rentDays);
+                        System.out.println("Количество дней аренды обновлено!");
                         break;
                     case "0":
                         return;

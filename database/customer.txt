@@ -1,21 +1,13 @@
 [ {
   "id" : 1,
-  "name" : "Николай",
+  "name" : "Руслан",
   "active" : true,
-  "bikes" : [ ]
-}, {
-  "id" : 2,
-  "name" : "Андрей",
-  "active" : true,
-  "bikes" : [ ]
-}, {
-  "id" : 3,
-  "name" : "Сергей",
-  "active" : true,
-  "bikes" : [ ]
-}, {
-  "id" : 4,
-  "name" : "Середжиус",
-  "active" : false,
-  "bikes" : [ ]
+  "bikes" : [ {
+    "id" : 2,
+    "title" : "Bulls Copperhead",
+    "type" : "GRAVEL",
+    "price" : 75.0,
+    "rentDays" : 1,
+    "active" : true
+  } ]
 } ]

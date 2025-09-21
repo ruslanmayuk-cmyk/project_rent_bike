@@ -1,50 +1,43 @@
 [ {
   "id" : 1,
-  "title" : "Cannondale Trail SE",
+  "title" : "Cub Aim",
   "type" : "MOUNTAIN",
-  "price" : 45.0,
-  "active" : true,
-  "rentDays" : 0
+  "price" : 50.0,
+  "rentDays" : 1,
+  "active" : true
 }, {
   "id" : 2,
-  "title" : "Buls Copperhead",
+  "title" : "Bulls Copperhead",
   "type" : "GRAVEL",
-  "price" : 55.0,
-  "active" : true,
-  "rentDays" : 0
+  "price" : 75.0,
+  "rentDays" : 1,
+  "active" : true
 }, {
   "id" : 3,
-  "title" : "Cube Nuroad One",
+  "title" : "Cannondale Synapse",
   "type" : "ROAD",
-  "price" : 35.0,
-  "active" : true,
-  "rentDays" : 0
+  "price" : 120.0,
+  "rentDays" : 1,
+  "active" : true
 }, {
   "id" : 4,
-  "title" : "Orbea Onna",
-  "type" : "MOUNTAIN",
-  "price" : 130.0,
-  "active" : true,
-  "rentDays" : 0
+  "title" : "Giant Escape",
+  "type" : "CITY",
+  "price" : 45.0,
+  "rentDays" : 1,
+  "active" : true
 }, {
   "id" : 5,
-  "title" : "Orbea Onna",
-  "type" : "MOUNTAIN",
-  "price" : 30.0,
-  "active" : true,
-  "rentDays" : 0
+  "title" : "Specialized Turbo",
+  "type" : "ELECTRIC",
+  "price" : 45.0,
+  "rentDays" : 1,
+  "active" : true
 }, {
   "id" : 6,
-  "title" : "Orbea Onna",
+  "title" : "Scott Scale",
   "type" : "MOUNTAIN",
-  "price" : 30.0,
-  "active" : true,
-  "rentDays" : 0
-}, {
-  "id" : 7,
-  "title" : "Orbea Onna",
-  "type" : "MOUNTAIN",
-  "price" : 30.0,
-  "active" : true,
-  "rentDays" : 0
+  "price" : 90.0,
+  "rentDays" : 1,
+  "active" : true
 } ]

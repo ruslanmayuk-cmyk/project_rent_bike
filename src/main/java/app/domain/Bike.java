@@ -6,33 +6,42 @@ public class Bike {
     private  int id;
     private String title;
     private BikeType type;
-    private double price;
+    private double price; // цена за день
+    private int rentDays;  // количество дней аренды
     private boolean active;
-    private int rentDays;  // на сколько дней берётся в аренду
 
     public Bike() {
     }
-
+    public Bike(String title, double price) {
+        this.title = title;
+        this.price = price;
+        this.active = true; // по умолчанию активен
+        this.rentDays = 1; // по умолчанию арендуем на 1 день
+    }
+    // Конструктор для сохранения нового байка
     public Bike(String title, BikeType type, double price) {
         this.title = title;
         this.type = type;
         this.price = price;
+        this.active = true;
+        this.rentDays = 1; // по умолчанию арендуем на 1 день
     }
 
-    public Bike(int id, String title, BikeType type, double price, boolean active) {
+    // Конструктор для обновления по id + цена
+    public Bike(int id, double price) {
+        this.id = id;
+        this.price = price;
+        this.active = true;
+        this.rentDays = 1;
+    }
+
+    // Конструктор для обновления по id + имя
+    public Bike(int id, String title) {
         this.id = id;
         this.title = title;
-        this.type = type;
-        this.price = price;
-        this.active = active;
+        this.active = true;
+        this.rentDays = 1;
     }
-
-    public Bike(int id, double price) {
-    }
-
-    public Bike(String title, double price) {
-    }
-
 
     public int getId() {
         return id;
@@ -84,19 +93,25 @@ public class Bike {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) return true;
+        if (!(o instanceof Bike)) return false;
         Bike bike = (Bike) o;
-        return id == bike.id && Double.compare(price, bike.price) == 0 && active == bike.active && Objects.equals(title, bike.title) && type == bike.type;
+        return id == bike.id &&
+                Double.compare(bike.price, price) == 0 &&
+                active == bike.active &&
+                rentDays == bike.rentDays &&
+                Objects.equals(title, bike.title) &&
+                type == bike.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, type, price, active);
+        return Objects.hash(id, title, type, price, active, rentDays);
     }
 
     @Override
     public String toString() {
-        return String.format("Велосипед: id - %d, наименование - %s, тип - %s, цена - %.2f, активен - %b.",
-                id, title, type.getRussianName(), price, active);
+        return String.format("Байк: id=%d, название=%s, тип=%s, цена=%.2f, активен=%b, дней аренды=%d",
+                id, title, type, price, active, rentDays);
     }
 }
