@@ -15,17 +15,8 @@ public class BikeService {
     public BikeService() throws IOException {
         repository = new BikeRepository();
     }
-    // Вернуть цену аренды  с учетом на сколько дней берётся в аренду
-    public double calculateRentCost(int id, int days) throws IOException, BikeNotFoundException {
-        Bike bike = getActiveBikeById(id);
-        if (days <= 0) {
-            throw new IllegalArgumentException("Количество дней аренды должно быть положительным");
-        }
-        bike.setRentDays(days); // сохраняем инфу в объекте
-        return bike.getPrice() * days;
-    }
 
-    //   Сохранить продукт в базе данных (при сохранении продукт автоматически считается активным).
+    //   Сохранить байк в базе данных
     public Bike save(Bike bike) throws BikeSaveException, IOException {
         if (bike == null) {
             throw new BikeSaveException("Байк не может быть null");
@@ -44,16 +35,15 @@ public class BikeService {
         return repository.save(bike);
     }
 
-    //   Вернуть все продукты из базы данных (активные).
+    //   Получить все активные байки из базы данных
     public List<Bike> getAllActiveBikes() throws IOException {
         return repository.findAll()
                 .stream()
                 .filter(Bike::isActive)
-//                .filter(x -> x.isActive())
                 .toList();
     }
 
-    //   Вернуть один продукт из базы данных по его идентификатору (если он активен).
+    //   Получить один активный байк по id из базы данных
     public Bike getActiveBikeById(int id) throws IOException, BikeNotFoundException {
         Bike bike = repository.findById(id);
 
@@ -63,7 +53,7 @@ public class BikeService {
         return bike;
     }
 
-    //   Изменить один продукт в базе данных по его идентификатору.
+    //   Обновить байк
     public void update(Bike bike) throws BikeUpdateException, IOException {
         if (bike == null) {
             throw new BikeUpdateException("Байк не может быть null");
@@ -76,15 +66,14 @@ public class BikeService {
         repository.update(bike);
     }
 
-    //   Удалить продукт из базы данных по его идентификатору.
-//   По требованиям должно происходить soft удаление - изменение статуса активности продукта
-    public void deleteById(int id) throws IOException, BikeNotFoundException {
+    //   Удаление по id (soft delete)- изменение статуса активности
+      public void deleteById(int id) throws IOException, BikeNotFoundException {
         Bike bike = getActiveBikeById(id);
         bike.setActive(false);
         repository.update(bike); // сохраняем изменения
     }
 
-    //   Удалить продукт из базы данных по его наименованию.
+    // Удаление по названию (soft delete)
     public void deleteByTitle(String title) throws IOException, BikeNotFoundException {
        Bike bike = getAllActiveBikes()
                 .stream()
@@ -98,7 +87,7 @@ public class BikeService {
 
     }
 
-    //   Восстановить удалённый продукт в базе данных по его идентификатору.
+    //   Восстановление байка по id
     public void restoreById(int id) throws IOException, BikeNotFoundException {
         Bike bike = repository.findById(id);
 
@@ -110,12 +99,12 @@ public class BikeService {
         }
     }
 
-    //   Вернуть общее количество продуктов в базе данных (активных).
+    //   Статистика = вернуть общее количество байков в базе данных (активных).
     public int getActiveBikesCount() throws IOException {
         return getAllActiveBikes().size();
     }
 
-    //   Вернуть суммарную стоимость всех продуктов в базе данных (активных).
+    //  Статистика = вернуть суммарную стоимость всех байков в базе данных (активных).
     public double getActiveBikesTotalCost() throws IOException {
         return getAllActiveBikes()
                 .stream()
@@ -123,14 +112,30 @@ public class BikeService {
                 .sum();
     }
 
-    //   Вернуть среднюю стоимость продукта в базе данных (из активных)
+    //   Статистика = вернуть среднюю стоимость аренды байка в базе данных (из активных)
     public double getActiveBikesAveragePrice() throws IOException {
-        int bikeCount = getActiveBikesCount();
+        int сount = getActiveBikesCount();
 
-        if (bikeCount == 0) {
+        if (сount == 0) {
             return 0.0;
         }
 
-        return getActiveBikesTotalCost()/bikeCount;
+        return getActiveBikesTotalCost()/сount;
     }
+
+    // Возвращает стоимость аренды для байка с учётом rentDays, если days = 0, берём текущее rentDays
+    public double calculateRentCost(int id, int days) throws IOException, BikeNotFoundException {
+        Bike bike = getActiveBikeById(id);
+
+        if (days > 0) {
+            bike.setRentDays(days);
+            repository.update(bike); // сохраняем изменения
+        } else if (bike.getRentDays() <= 0) {
+            bike.setRentDays(1); // дефолт 1 день, если не установлен
+        }
+
+        return bike.getPrice() * bike.getRentDays();
+    }
+
+
 }

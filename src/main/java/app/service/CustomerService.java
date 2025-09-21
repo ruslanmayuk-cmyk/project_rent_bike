@@ -113,11 +113,11 @@ public class CustomerService {
 
     //    Вернуть стоимость корзины покупателя по его идентификатору (если он активен).
     public double getCustomerCartTotalPrice(int id) throws IOException, CustomerNotFoundException {
-        return getActiveCustomerById(id)// получаем покупателя
+        return getActiveCustomerById(id) // получаем покупателя
                 .getBikes() // получаем его велики
                 .stream()
                 .filter(Bike::isActive) // нужны только активные
-                .mapToDouble(Bike::getPrice) // получаем их цену
+                .mapToDouble(bike -> bike.getPrice() * bike.getRentDays()) // цена за аренду = цена байка * кол-во дней аренды
                 .sum(); // суммируем
     }
 
@@ -127,15 +127,21 @@ public class CustomerService {
                 .getBikes() // получаем байки
                 .stream()
                 .filter(Bike::isActive) // фильтруем, что бы были только активные
-                .mapToDouble(Bike::getPrice) // получаем цены
+                .mapToDouble(bike -> bike.getPrice() * bike.getRentDays()) // получаем цены, учитывая дни аренды
                 .average()
                 .orElse(0.0); // если великов не было
     }
 
     //    Добавить байк в корзину покупателя по их идентификаторам (если оба активны)
-    public void addBikeToCustomerCart(int customerId, int bikeId) throws IOException, CustomerNotFoundException, BikeNotFoundException {
+    public void addBikeToCustomerCart(int customerId, int bikeId, int rentDays) throws IOException, CustomerNotFoundException, BikeNotFoundException {
+
+        if (rentDays <= 0) {
+            throw new IllegalArgumentException("Количество дней аренды должно быть положительным");
+        }
         Customer customer = getActiveCustomerById(customerId); // забираем покупателя в переменную
         Bike bike = bikeService.getActiveBikeById(bikeId); // получаем в переменную байк
+
+        bike.setRentDays(rentDays); // задаём количество дней аренды
         customer.getBikes().add(bike); // получаем от пользователя список байков и делаем в него add
         repository.update(customer); // сохраняем изменения
     }
@@ -154,4 +160,26 @@ public class CustomerService {
                 customer.getBikes().clear();
         repository.update(customer);
     }
+
+    // Обновить кол-во дней аренды у байка, который уже есть в корзине покупателя
+    public void updateBikeRentDaysInCustomerCart(int customerId, int bikeId, int rentDays)
+            throws IOException, CustomerNotFoundException, BikeNotFoundException {
+        if (rentDays <= 0) {
+            throw new IllegalArgumentException("Количество дней аренды должно быть положительным");
+        }
+
+        Customer customer = getActiveCustomerById(customerId);
+
+        Bike bike = customer.getBikes()
+                .stream()
+                .filter(b -> b.getId() == bikeId && b.isActive())
+                .findFirst()
+                .orElseThrow(() -> new BikeNotFoundException(bikeId));
+
+        bike.setRentDays(rentDays);
+
+        repository.update(customer); // сохраняем изменения
+    }
+
+
 }

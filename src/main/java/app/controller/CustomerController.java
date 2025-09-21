@@ -60,8 +60,8 @@ public class CustomerController {
         return service.getCustomerCartAveragePrice(id);
     }
 
-    public void addProductToCustomerCart(int customerId, int biketId) throws IOException, CustomerNotFoundException,  BikeNotFoundException {
-        service.addBikeToCustomerCart(customerId, biketId);
+    public void addProductToCustomerCart(int customerId, int bikeId, int rentDays) throws IOException, CustomerNotFoundException,  BikeNotFoundException {
+        service.addBikeToCustomerCart(customerId, bikeId, rentDays);
     }
 
     public void removeProductFromCustomerCart(int customerId, int  biketId) throws IOException, CustomerNotFoundException,  BikeNotFoundException {
@@ -70,5 +70,10 @@ public class CustomerController {
 
     public void clearCustomerCart(int id) throws IOException, CustomerNotFoundException {
         service.clearCustomerCart(id);
+    }
+
+    public void updateBikeRentDaysInCustomerCart(int customerId, int bikeId, int rentDays)
+            throws IOException, CustomerNotFoundException, BikeNotFoundException {
+        service.updateBikeRentDaysInCustomerCart(customerId, bikeId, rentDays);
     }
 }

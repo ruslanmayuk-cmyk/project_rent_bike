@@ -16,11 +16,8 @@ public class BikeController {
         service = new BikeService();
     }
 
-    // копируем методы из  сервиса байков и очищаем тела методов, оставляем только названия
 
-    // Для сохранения байка от клиента требуется только название, тип и цена
-    public Bike save(String title, double price) throws BikeSaveException, IOException {
-        Bike bike = new Bike (title, price);
+    public Bike save(Bike bike) throws BikeSaveException, IOException {
         return service.save(bike);
     }
 
